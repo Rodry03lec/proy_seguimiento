@@ -1,0 +1,102 @@
+/* Contenedor principal del CAPTCHA */
+.captcha {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* Contenedor del rectángulo del CAPTCHA */
+.captcha-container {
+    position: relative;
+    margin-right: 20px;
+}
+
+/* Estilo del rectángulo */
+.rectangulo {
+    width: 180px;
+    height: 50px;
+    background-color: rgba(3, 3, 3, 0.658);
+    background-image: linear-gradient(to bottom right, transparent 49.5%, rgba(71, 61, 139, 0.568) 49.5%, rgba(71, 61, 139, 0.568) 50.5%, transparent 50.5%),
+                    linear-gradient(to bottom right, transparent 49.5%, rgba(124, 104, 238, 0.582) 49.5%, rgba(124, 104, 238, 0.274) 50.5%, transparent 50.5%);
+    background-size: 7px 7px;
+    background-repeat: repeat;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.rectangulo::before, .rectangulo::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.rectangulo::before {
+    top: 30%;
+}
+
+.rectangulo::after {
+    top: 70%;
+}
+
+
+/* Texto del CAPTCHA - desactivar selección de texto */
+.captcha-text {
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+    font-weight: bold;
+    text-shadow: 2px 1px 1px rgba(255, 255, 255, 0.774);
+    background: rgba(255, 255, 255, 0.925);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    user-select: none; /* Desactiva la selección de texto */
+    -webkit-user-select: none; /* Para navegadores WebKit */
+    -moz-user-select: none; /* Para Firefox */
+    -ms-user-select: none; /* Para Internet Explorer/Edge */
+    font-family: 'Roboto', sans-serif; /* Cambiar el tipo de fuente */
+    white-space: nowrap; /* Evitar que el texto se ajuste */
+    overflow: hidden; /* Ocultar texto desbordado */
+    text-overflow: ellipsis; /* Añadir puntos suspensivos si el texto se desborda */
+    max-width: 100%; /* Asegurar que el texto se mantenga dentro del contenedor */
+    display: flex; /* Flexbox para posicionar caracteres */
+    justify-content: center; /* Centrar los caracteres */
+}
+
+/* Botón para refrescar el CAPTCHA */
+.btn-refrescar {
+    font-size: 13px;
+    font-weight: bold;
+    border: 0px;
+    color: white;
+    background-color: #667eea;
+    padding: 11px 16px;
+    border-radius: 15px;
+    cursor: pointer;
+    width: 46px;
+    height: 40px;
+}
+
+.btn-refrescar:hover {
+    background-color: rgba(0, 41, 176, 0.941);
+    color: rgb(255, 255, 255);
+    animation: slide 10s linear infinite;
+}
+
+/* Animación del botón */
+@keyframes slide {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+

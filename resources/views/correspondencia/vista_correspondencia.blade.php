@@ -159,10 +159,10 @@
 
         .auth-illustration {
             z-index: 2;
-            position: relative;
+            position: absolute;
             width: 100%;
-            height: 80%;
-            padding: 10%;
+            height: 70%;
+            padding: 20%;
         }
 
         #formulario {
@@ -210,7 +210,7 @@
         th, td {
             text-align: left;
             padding: 13px;
-            font-size: 16px;
+            font-size: 14px;
         }
         th {
             background-color: #0044aa;
@@ -236,11 +236,11 @@
 
     <div class="authentication-wrapper authentication-bg">
         <div class="authentication-inner row">
-            <div class="d-none d-lg-flex col-lg-7 p-0 auth-cover-bg">
+            <div class="d-none d-lg-flex col-lg-5 p-0 auth-cover-bg">
                 <div class="overlay"></div>
                 <img src="{{ asset('rodry/img_logos/logo_png.png') }}" alt="logo" class="img-fluid my-4 p-8 auth-illustration">
             </div>
-            <div class="d-flex col-12 col-lg-5 align-items-center p-4">
+            <div class="d-flex col-12 col-lg-7 align-items-center p-3">
 
 
                 <div class="w-100">

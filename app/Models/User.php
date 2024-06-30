@@ -15,9 +15,13 @@ use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
+use Illuminate\Support\Facades\Auth;
+
 class User extends Authenticatable
 {
-    use HasRoles,HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasRoles,HasApiTokens, HasFactory, Notifiable, SoftDeletes; /*LogsActivity*/
 
     /**
      * The attributes that are mass assignable.
@@ -41,6 +45,29 @@ class User extends Authenticatable
 
     protected $dates = ['deleted_at'];
 
+
+    /* public function getActivitylogOptions(): LogOptions {
+        return LogOptions::defaults()
+            ->logOnly([
+                'usuario',
+                'password',
+                'ci',
+                'nombres',
+                'apellidos',
+                'estado',
+                'id_persona',
+            ])
+            ->useLogName('users')
+            ->setDescriptionForEvent(fn(string $eventName) => $this->getDescriptionForEvent($eventName))
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
+    }
+
+    public function getDescriptionForEvent(string $eventName): string {
+        $user = Auth::user();
+        return "Este modelo ha sido {$eventName} por el usuario {$user->nombres} {$user->apellidos} (ID: {$user->id}) (CI: {$user->ci})";
+    }
+ */
     /**
      * The attributes that should be hidden for serialization.
      *

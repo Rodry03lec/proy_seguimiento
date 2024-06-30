@@ -16,6 +16,7 @@
                     <tr>
                         <th>Nº</th>
                         <th>CI</th>
+                        <th>USUARIO</th>
                         <th>NOMBRES</th>
                         <th>ESTADO</th>
                         <th>ROL</th>
@@ -164,6 +165,10 @@
                     },
                     {
                         data:'ci',
+                        className: 'table-td',
+                    },
+                    {
+                        data:'usuario',
                         className: 'table-td',
                     },
                     {

@@ -55,8 +55,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('{{ asset('rodry/imagenes/fondo_img.jpeg') }}') center/cover no-repeat;
-            opacity: 0.8;
+            background: url('{{ asset('graice/Lago_Titicaca.jpg') }}') center/cover no-repeat;
+            opacity: 0.5;
             z-index: -1;
         }
 
@@ -81,7 +81,7 @@
             left: 50%;
             transform: translateX(-50%);
             width: 300px;
-            opacity: 0.1;
+            opacity: 0.2;
             /* 50% de transparencia */
             z-index: 900;
             /* Un valor alto para asegurar que esté al frente */

@@ -390,7 +390,7 @@
                 if (dato.tipo === 'success') {
                     $('#modal_vizualizar').modal('show');
                     let remitente_txt = "";
-                    if(dato.tramite.remitente_nombre != null){
+                    if(dato.tramite.remitente_nombre != null && dato.tramite.remitente_nombre != ""){
                         remitente_txt = dato.tramite.remitente_nombre;
                     }else{
                         remitente_txt = dato.tramite.remitente_user.contrato.grado_academico.abreviatura+' '+dato.tramite.remitente_user.persona.nombres+' '+dato.tramite.remitente_user.persona.ap_paterno+' '+dato.tramite.remitente_user.persona.ap_materno;
@@ -502,7 +502,7 @@
 
                 document.getElementById('listar_hojas_ruta').innerHTML = cuerpo;
 
-                if(archivado_resp != null || archivado_resp != ''){
+                if(archivado_resp !== null && archivado_resp !== ''){
                     document.getElementById('contenido_txt').innerHTML = `
                         <div class="alert alert-danger alert-dismissible d-flex align-items-baseline" role="alert">
                             `+archivado_resp+`
@@ -551,6 +551,10 @@
                     alerta_top(dato.tipo, dato.mensaje);
                     actulizar_tabla();
                     vaciar_formulario_responder();
+
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1500);
                 }
                 if (dato.tipo === 'error') {
                     alerta_top(dato.tipo, dato.mensaje);

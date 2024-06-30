@@ -37,7 +37,7 @@
             <div class="card shadow-lg">
                 <div class="card-header position-relative p-0 overflow-hidden">
                     <!-- Imagen principal -->
-                    <img src="{{ asset('rodry/img_logos/img_huatajata.jpg') }}" class="img-fluid" alt="Imagen Principal" style="width: 100%; height: auto; max-height: 250px; object-fit: cover;">
+                    <img src="{{ asset('graice/titicaca_lago_puno_portada.jpg') }}" class="img-fluid" alt="Imagen Principal" style="width: 100%; height: auto; max-height: 250px; object-fit: cover;">
 
                     <!-- Logo adicional superpuesto -->
                     <div class="position-absolute top-0 end-0 m-3 bg-white rounded-circle p-2 shadow-lg" style="width: 80px; height: 80px;">

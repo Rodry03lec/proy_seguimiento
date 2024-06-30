@@ -433,6 +433,7 @@
                     actulizar_tabla_cargos();
                     listar_cargos_contrato(dato.id_contrato_lis, dato.id_usuario_lis);
                     document.getElementById('nombre').value = '';
+                    actulizar_tabla();
                 }
                 if (dato.tipo === 'error') {
                     alerta_top(dato.tipo, dato.mensaje);

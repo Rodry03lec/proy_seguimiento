@@ -133,7 +133,7 @@
 
                 <tr class="table-danger reduced-font">
                     <th>REGISTRADO POR: </th>
-                    {{-- <th>{{ $contrato->usuario->nombres.' '.$contrato->usuario->apellidos }}</th> --}}
+                    <th>{{ $contrato->usuario->nombres.' '.$contrato->usuario->apellidos }}</th>
                 </tr>
 
             </thead>

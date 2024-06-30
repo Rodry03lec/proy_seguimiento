@@ -12,10 +12,11 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Tramite extends Model
 {
-    use HasFactory, LogsActivity;
+    use HasFactory, LogsActivity, SoftDeletes;
 
     protected $table = 'rl_tramite';
 
@@ -47,6 +48,8 @@ class Tramite extends Model
         'destinatario_id',
         'user_cargo_id',
     ];
+
+    protected $dates = ['deleted_at'];
 
     public function getActivitylogOptions(): LogOptions {
         return LogOptions::defaults()

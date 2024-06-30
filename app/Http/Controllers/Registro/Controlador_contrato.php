@@ -438,7 +438,7 @@ class Controlador_contrato extends Controller
      * PARA EDITAR CONTRATO
      */
     public function editar_contrato(Request $request){
-        //try {
+        try {
             $contrato = Contrato::with([
                 'nivel'=>function($niv){
                     $niv->with(['categoria'=>function($cat){
@@ -506,9 +506,9 @@ class Controlador_contrato extends Controller
             }else{
                 $data = mensaje_mostrar('error', 'Ocurrio un error');
             }
-        /* } catch (\Throwable $th) {
+        } catch (\Throwable $th) {
             $data = mensaje_mostrar('error', 'Ocurrio un error');
-        } */
+        }
         return response()->json($data);
     }
 

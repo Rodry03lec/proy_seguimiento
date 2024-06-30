@@ -84,6 +84,10 @@ class Controlador_tramite extends Controller{
                                         ->where('estado_id', 6)
                                         ->count();
 
+        $data['contar_bandeja_archivado'] = Ruta_archivado::whereHas('hoja_ruta', function ($query) use ($id_descript) {
+                                            $query->where('destinatario_id', $id_descript);
+                                        })->count();
+
         $data['tipo_tramite']       = Tipo_tramite::where('estado', 1)->get();
         $data['tipo_prioridad']     = Tipo_prioridad::get();
         $data['destinatario_ti']    = User_cargo_tramite::with(['cargo_sm', 'cargo_mae', 'usuario', 'persona'])->where('estado', 1)->get();
@@ -397,7 +401,9 @@ class Controlador_tramite extends Controller{
                                         ->where('estado_id', 6)
                                         ->count();
 
-
+        $data['contar_bandeja_archivado'] = Ruta_archivado::whereHas('hoja_ruta', function ($query) use ($id_descript) {
+                                            $query->where('destinatario_id', $id_descript);
+                                        })->count();
 
 
         return view('administrador.tramite.correspondencia.bandeja_entrada', $data);
@@ -613,6 +619,10 @@ class Controlador_tramite extends Controller{
                                         ->where('estado_id', 6)
                                         ->count();
 
+        $data['contar_bandeja_archivado'] = Ruta_archivado::whereHas('hoja_ruta', function ($query) use ($id_descript) {
+                                            $query->where('destinatario_id', $id_descript);
+                                        })->count();
+
 
         $data['destinatario']    = User_cargo_tramite::with(['cargo_sm', 'cargo_mae', 'usuario', 'persona','contrato'=>function($con){
             $con->with(['grado_academico']);
@@ -790,7 +800,7 @@ class Controlador_tramite extends Controller{
         }else{
             try {
                 // Inicia una transacción
-               DB::beginTransaction();
+                DB::beginTransaction();
 
                 //la hoja de ruta actual
                 $hoja_ruta_actual = Hojas_ruta::find($request->id_hoja_ruta);
@@ -876,6 +886,9 @@ class Controlador_tramite extends Controller{
                                         ->where('estado_id', 6)
                                         ->count();
 
+        $data['contar_bandeja_archivado'] = Ruta_archivado::whereHas('hoja_ruta', function ($query) use ($id_descript) {
+                                            $query->where('destinatario_id', $id_descript);
+                                        })->count();
         //PARA LISTAR LOS TRAMITES CORRESPONDIENTES
 
 
@@ -900,7 +913,6 @@ class Controlador_tramite extends Controller{
 
 
         $data['contar_num_tramite'] = Tramite::where('user_cargo_id', $id_descript)
-                                        ->where('id_estado', 2)
                                         ->count();
 
         $data['contar_bandeja_entrada'] = Hojas_ruta::where('destinatario_id', $id_descript)
@@ -914,6 +926,11 @@ class Controlador_tramite extends Controller{
         $data['contar_bandeja_observado'] = Hojas_ruta::where('destinatario_id', $id_descript)
                                         ->where('estado_id', 6)
                                         ->count();
+
+        $data['contar_bandeja_archivado'] = Ruta_archivado::whereHas('hoja_ruta', function ($query) use ($id_descript) {
+                                            $query->where('destinatario_id', $id_descript);
+                                        })->count();
+
 
         //PARA LISTAR LOS TRAMITES CORRESPONDIENTES
 

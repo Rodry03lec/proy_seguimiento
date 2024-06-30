@@ -51,7 +51,6 @@
                 })
             });
             let dato = await respuesta.json();
-            console.log(dato);
             let i = 1;
             $('#tabla_bandeja_entrada').DataTable({
                 responsive: true,
@@ -277,11 +276,10 @@
                     })
                 });
                 let dato = await respuesta.json();
-                console.log(dato);
                 if (dato.tipo === 'success') {
                     $('#modal_vizualizar').modal('show');
                     let remitente_txt = "";
-                    if(dato.tramite.remitente_nombre != null){
+                    if(dato.tramite.remitente_nombre != null && dato.tramite.remitente_nombre != ""){
                         remitente_txt = dato.tramite.remitente_nombre;
                     }else{
                         remitente_txt = dato.tramite.remitente_user.contrato.grado_academico.abreviatura+' '+dato.tramite.remitente_user.persona.nombres+' '+dato.tramite.remitente_user.persona.ap_paterno+' '+dato.tramite.remitente_user.persona.ap_materno;
@@ -322,6 +320,7 @@
                         </table>
                     `;
 
+
                     listar_hojas_ruta(dato.tramite.id);
 
                 }
@@ -349,7 +348,6 @@
                         })
                     });
                     let dato = await respuesta.json();
-                    console.log(dato);
                     let datos = dato;
                     let cuerpo = "";
                     let i = 1;
@@ -443,6 +441,9 @@
                             actulizar_tabla();
                             //mostrando la alerta
                             alerta_top(dato.tipo, dato.mensaje);
+                            setTimeout(() => {
+                                location.reload();
+                            }, 1500);
                         }
                         if(dato.tipo === 'error'){
                             alerta_top(dato.tipo, dato.mensaje);

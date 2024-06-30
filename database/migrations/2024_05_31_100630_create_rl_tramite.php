@@ -40,6 +40,7 @@ return new class extends Migration
             $table->unsignedBigInteger('destinatario_id')->nullable();
             $table->unsignedBigInteger('user_cargo_id')->nullable();
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable(true);
 
             $table->foreign('id_tipo_prioridad')
                     ->references('id')

@@ -56,8 +56,10 @@
                                     onchange="tipo_tramite_validar(this.value)">
                                     <option disabled selected value="0">[SELECCIONE TIPO DE TRAMITE]</option>
                                     @foreach ($tipo_tramite as $lis)
-                                        <option value="{{ $lis->id }}">{{ '[' . $lis->sigla . '] ' . $lis->nombre }}
-                                        </option>
+                                        @if($lis->estado != 0 && $lis->estado != false)
+                                            <option value="{{ $lis->id }}">{{ '[' . $lis->sigla . '] ' . $lis->nombre }}
+                                            </option>
+                                        @endif
                                     @endforeach
                                 </select>
                                 <div id="_tipo_tramite"></div>

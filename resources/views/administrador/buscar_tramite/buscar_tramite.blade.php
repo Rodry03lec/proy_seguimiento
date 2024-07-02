@@ -175,160 +175,118 @@
         }
 
 
-        //para vizualizar un tramite en donde va con un modal solo ver
+        //PARA VER EL TRAMITE
         async function ver_tramite(id) {
             let detalles_correspondencia = document.getElementById('contenido_correspondencia');
             try {
-                let respuesta = await fetch("{{ route('corres_vizualizar') }}", {
+                const response = await fetch("{{ route('corres_vizualizar') }}", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': token
                     },
                     body: JSON.stringify({
-                        id: id
+                        id
                     })
                 });
-                let dato = await respuesta.json();
-                if (dato.tipo === 'success') {
+
+                const data = await response.json();
+                if (data.tipo === 'success') {
                     $('#modal_vizualizar').modal('show');
-                    let remitente_txt = "";
-                    if(dato.tramite.remitente_nombre != null){
-                        remitente_txt = dato.tramite.remitente_nombre;
-                    }else{
-                        remitente_txt = dato.tramite.remitente_user.contrato.grado_academico.abreviatura+' '+dato.tramite.remitente_user.persona.nombres+' '+dato.tramite.remitente_user.persona.ap_paterno+' '+dato.tramite.remitente_user.persona.ap_materno;
-                    }
+
+                    const remitente = data.tramite.remitente_nombre ||
+                        `${data.tramite.remitente_user.contrato.grado_academico.abreviatura} ${data.tramite.remitente_user.persona.nombres} ${data.tramite.remitente_user.persona.ap_paterno} ${data.tramite.remitente_user.persona.ap_materno}`;
+
                     detalles_correspondencia.innerHTML = `
-                        <table>
-                            <tr>
-                                <th><strong>Nº </strong> </th>
-                                <th>: ${dato.tramite.numero_unico}/${new Date(dato.tramite.fecha_creada).getFullYear()}</th>
-                            </tr>
-
-                            <tr>
-                                <th><strong>REMITENTE </strong> </th>
-                                <th>: ${remitente_txt}</th>
-                            </tr>
-
-                            <tr>
-                                <th><strong>DESTINATARIO </strong> </th>
-                                <th>: ${dato.tramite.destinatario_user.contrato.grado_academico.abreviatura+' '+dato.tramite.destinatario_user.persona.nombres+' '+dato.tramite.destinatario_user.persona.ap_paterno+' '+dato.tramite.destinatario_user.persona.ap_materno}</th>
-                            </tr>
-
-                            <tr>
-                                <th><strong>REFERENCIA </strong> </th>
-                                <th>: ${dato.tramite.referencia}</th>
-                            </tr>
-
-                            <tr>
-                                <th><strong>SALIDA </strong> </th>
-                                <th>: ${dato.tramite.fecha_hora_creada}</th>
-                            </tr>
-
-                            <tr>
-                                <th><strong>US. CREADO </strong> </th>
-                                <th>:
-                                    ${dato.tramite.user_cargo_tramite.contrato.grado_academico.abreviatura+' '+dato.tramite.user_cargo_tramite.persona.nombres+' '+dato.tramite.user_cargo_tramite.persona.ap_paterno+' '+dato.tramite.user_cargo_tramite.persona.ap_materno}
-                                </th>
-                            </tr>
-                        </table>
-                    `;
-
-                    listar_hojas_ruta(dato.tramite.id);
-
-                }
-                if (dato.tipo === 'error') {
-                    alerta_top(dato.tipo, dato.mensaje);
-                    detalles_correspondencia.innerHTML = ``;
+                <table>
+                    <tr>
+                        <th><strong>Nº </strong> </th>
+                        <th>: ${data.tramite.numero_unico}/${new Date(data.tramite.fecha_creada).getFullYear()}</th>
+                    </tr>
+                    <tr>
+                        <th><strong>REMITENTE </strong> </th>
+                        <th>: ${remitente}</th>
+                    </tr>
+                    <tr>
+                        <th><strong>DESTINATARIO </strong> </th>
+                        <th>: ${data.tramite.destinatario_user.contrato.grado_academico.abreviatura} ${data.tramite.destinatario_user.persona.nombres} ${data.tramite.destinatario_user.persona.ap_paterno} ${data.tramite.destinatario_user.persona.ap_materno}</th>
+                    </tr>
+                    <tr>
+                        <th><strong>REFERENCIA </strong> </th>
+                        <th>: ${data.tramite.referencia}</th>
+                    </tr>
+                    <tr>
+                        <th><strong>SALIDA </strong> </th>
+                        <th>: ${data.tramite.fecha_hora_creada}</th>
+                    </tr>
+                    <tr>
+                        <th><strong>US. CREADO </strong> </th>
+                        <th>: ${data.tramite.user_cargo_tramite.contrato.grado_academico.abreviatura} ${data.tramite.user_cargo_tramite.persona.nombres} ${data.tramite.user_cargo_tramite.persona.ap_paterno} ${data.tramite.user_cargo_tramite.persona.ap_materno}</th>
+                    </tr>
+                </table>
+            `;
+                    listar_hojas_ruta(data.tramite.id);
+                } else {
+                    alerta_top(data.tipo, data.mensaje);
+                    detalles_correspondencia.innerHTML = '';
                 }
             } catch (error) {
-                console.log('error : ' + error);
-                detalles_correspondencia.innerHTML = ``;
+                console.error('Error:', error);
+                detalles_correspondencia.innerHTML = '';
             }
         }
 
-        //para imprimir la vista de las hojas de ruta
+        //PARA LISTAR LAS HOJAS DE RUTA
         async function listar_hojas_ruta(id_tramite) {
             try {
-                let respuesta = await fetch("{{ route('corres_lis_ruta') }}", {
-                    method: "POST",
+                const response = await fetch("{{ route('corres_lis_ruta') }}", {
+                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': token,
+                        'X-CSRF-TOKEN': token
                     },
                     body: JSON.stringify({
                         id: id_tramite
                     })
                 });
-                let dato = await respuesta.json();
-                console.log(dato);
-                let datos = dato;
-                let cuerpo = "";
-                let i = 1;
 
-                let archivado_resp = '';
+                const data = await response.json();
+                const cuerpo = data.map((item, index) => {
+                    const estado = item.estado_id === 2 ?
+                        `<td class="font-size-10"><span class="${item.estado_tipo.color}">${item.estado_tipo.nombre}</span></td>` :
+                        `<td class="font-size-10">${item.fecha_ingreso}</td>`;
 
-                for (let key in datos) {
-                    cuerpo += '<tr>';
-                    cuerpo += "<td>" + i++ + "</td>";
-                    if (datos[key]['estado_id'] === 2) {
-                        cuerpo += "<td class=\"font-size-10\">" + " </br><span class=\"" + datos[key]['estado_tipo'][
-                            'color'
-                        ] + "\">" + datos[key]['estado_tipo']['nombre'] + "</span> </td>";
-                    } else {
-                        cuerpo += "<td class=\"font-size-10\">" + datos[key]['fecha_ingreso'] + "</td>";
-                    }
+                    const destinatario =
+                        `${item.destinatario_user.contrato.grado_academico.abreviatura} ${item.destinatario_user.persona.nombres} ${item.destinatario_user.persona.ap_paterno} ${item.destinatario_user.persona.ap_materno}`;
 
-                    cuerpo += "<td class=\"font-size-10\">" + datos[key]['fecha_salida'] + "</td>";
+                    const cargo = item.destinatario_user.cargo_sm ? item.destinatario_user.cargo_sm.nombre :
+                        item.destinatario_user.cargo_mae.nombre;
+                    const unidad = item.destinatario_user.cargo_sm ?
+                        `${item.destinatario_user.cargo_sm.direccion.nombre}<br>${item.destinatario_user.cargo_sm.unidades_admnistrativas.nombre}` :
+                        item.destinatario_user.cargo_mae.unidad_mae.descripcion;
 
-                    let cargo_ajustar = '';
-                    let unidad_direccion = '';
-                    let destinatario_usuario = '';
-
-                    if (datos[key]['destinatario_user']['cargo_sm'] != null) {
-                        cargo_ajustar = datos[key]['destinatario_user']['cargo_sm']['nombre'];
-                        unidad_direccion = datos[key]['destinatario_user']['cargo_sm']['direccion']['nombre'] +
-                            '</br>' + datos[key]['destinatario_user']['cargo_sm']['unidades_admnistrativas']['nombre'];
-                    } else {
-                        cargo_ajustar = datos[key]['destinatario_user']['cargo_mae']['nombre'];
-                        unidad_direccion = datos[key]['destinatario_user']['cargo_mae']['unidad_mae']['descripcion'];
-                    }
-
-                    destinatario_usuario = datos[key]['destinatario_user']['contrato']['grado_academico'][
-                        'abreviatura'] + ' ' + datos[key]['destinatario_user']['persona']['nombres'] + ' ' + datos[key][
-                            'destinatario_user'
-                        ]['persona']['ap_paterno'] + ' ' + datos[key]['destinatario_user']['persona']['ap_materno'];
-
-                    cuerpo += "<td class=\"font-size-10\">" + unidad_direccion + "</td>";
-                    cuerpo += "<td class=\"font-size-10\">" + cargo_ajustar + "</td>";
-                    cuerpo += "<td class=\"font-size-10\">" + destinatario_usuario + "</td>";
-                    cuerpo += "<td class=\"font-size-10\">" + datos[key]['instructivo'] + "</td>";
-                    cuerpo += '</tr>';
-
-                    if (datos[key]['ruta_archivado'] != null) {
-                        archivado_resp = datos[key]['ruta_archivado']['descripcion'];
-                    }
-                }
-
+                    return `
+                <tr>
+                    <td>${index + 1}</td>
+                    ${estado}
+                    <td class="font-size-10">${item.fecha_salida}</td>
+                    <td class="font-size-10">${unidad}</td>
+                    <td class="font-size-10">${cargo}</td>
+                    <td class="font-size-10">${destinatario}</td>
+                    <td class="font-size-10">${item.instructivo}</td>
+                </tr>`;
+                }).join('');
 
                 document.getElementById('listar_hojas_ruta').innerHTML = cuerpo;
 
-                if (archivado_resp != null && archivado_resp != '') {
-                    document.getElementById('contenido_txt').innerHTML = `
-                        <div class="alert alert-danger alert-dismissible d-flex align-items-baseline" role="alert">
-                            ` + archivado_resp + `
-                        </div>
-                    `;
-                } else {
-                    document.getElementById('contenido_txt').innerHTML = '';
-                }
-
-
+                const archivadoResp = data.find(item => item.ruta_archivado);
+                document.getElementById('contenido_txt').innerHTML = archivadoResp ?
+                    `<div class="alert alert-danger alert-dismissible d-flex align-items-baseline" role="alert">${archivadoResp.ruta_archivado.descripcion}</div>` :
+                    '';
             } catch (error) {
-                console.log('error : ' + error);
+                console.error('Error:', error);
             }
         }
-
 
         //PARA LA IMPRESION DEL PDF DE LA HOJA DE RUTA
         async function vertramite_pdf(id_tramite) {
